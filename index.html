@@ -5252,15 +5252,16 @@ var $author$project$Mouse$Pos = F2(
 		return {clientx: clientx, clienty: clienty};
 	});
 var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Mouse$pointerDecoder = A3(
 	$elm$json$Json$Decode$map2,
 	$author$project$Mouse$Pos,
-	A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$int),
-	A2($elm$json$Json$Decode$field, 'clientY', $elm$json$Json$Decode$int));
+	A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$float),
+	A2($elm$json$Json$Decode$field, 'clientY', $elm$json$Json$Decode$float));
+var $elm$core$String$fromFloat = _String_fromNumber;
 var $author$project$Mouse$statusText = function (model) {
 	var s = model.down ? 'Down' : 'Up';
-	return s + ($elm$core$String$fromInt(model.x) + (', ' + $elm$core$String$fromInt(model.y)));
+	return s + ($elm$core$String$fromFloat(model.x) + (', ' + $elm$core$String$fromFloat(model.y)));
 };
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
@@ -5271,8 +5272,8 @@ var $author$project$Mouse$view = function (model) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'width', '640vw'),
-				A2($elm$html$Html$Attributes$style, 'height', '240vh'),
+				A2($elm$html$Html$Attributes$style, 'width', '100vw'),
+				A2($elm$html$Html$Attributes$style, 'height', '100vh'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'background-color',
