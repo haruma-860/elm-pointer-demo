@@ -4962,11 +4962,11 @@ function _Browser_load(url)
 	}));
 }
 var $elm$core$Basics$False = {$: 'False'};
-var $author$project$Kadai1$Model = F7(
-	function (down, x, y, rectx, recty, nx, ny) {
-		return {down: down, nx: nx, ny: ny, rectx: rectx, recty: recty, x: x, y: y};
+var $author$project$Mouse$Model = F3(
+	function (down, x, y) {
+		return {down: down, x: x, y: y};
 	});
-var $author$project$Kadai1$init = A7($author$project$Kadai1$Model, false, 0, 0, 100, 100, 0, 0);
+var $author$project$Mouse$init = A3($author$project$Mouse$Model, false, 0, 0);
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -10586,51 +10586,48 @@ var $elm$browser$Browser$sandbox = function (impl) {
 			view: impl.view
 		});
 };
-var $author$project$Kadai1$update = F2(
+var $author$project$Mouse$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'Move':
 				var pos = msg.a;
-				return model.down ? _Utils_update(
-					model,
-					{rectx: pos.clientx - model.nx, recty: pos.clienty - model.ny, x: pos.clientx, y: pos.clienty}) : _Utils_update(
+				return _Utils_update(
 					model,
 					{x: pos.clientx, y: pos.clienty});
 			case 'Down':
 				var pos = msg.a;
 				return _Utils_update(
 					model,
-					{down: true, nx: pos.clientx - model.rectx, ny: pos.clienty - model.recty, x: pos.clientx, y: pos.clienty});
+					{down: true, x: pos.clientx, y: pos.clienty});
 			default:
-				var pos = msg.a;
 				return _Utils_update(
 					model,
-					{down: false, x: pos.clientx, y: pos.clienty});
+					{down: false});
 		}
 	});
-var $author$project$Kadai1$Down = function (a) {
+var $author$project$Mouse$Down = function (a) {
 	return {$: 'Down', a: a};
 };
-var $author$project$Kadai1$Move = function (a) {
+var $author$project$Mouse$Move = function (a) {
 	return {$: 'Move', a: a};
 };
-var $author$project$Kadai1$Up = function (a) {
+var $author$project$Mouse$Up = function (a) {
 	return {$: 'Up', a: a};
 };
-var $author$project$Kadai1$Pos = F2(
+var $author$project$Mouse$Pos = F2(
 	function (clientx, clienty) {
 		return {clientx: clientx, clienty: clienty};
 	});
-var $author$project$Kadai1$pointerDecoder = A3(
+var $author$project$Mouse$pointerDecoder = A3(
 	$elm$json$Json$Decode$map2,
-	$author$project$Kadai1$Pos,
+	$author$project$Mouse$Pos,
 	A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$float),
 	A2($elm$json$Json$Decode$field, 'clientY', $elm$json$Json$Decode$float));
-var $author$project$Kadai1$statusText = function (model) {
+var $author$project$Mouse$statusText = function (model) {
 	var s = model.down ? 'Down' : 'Up';
 	return s + ($elm$core$String$fromFloat(model.x) + (', ' + $elm$core$String$fromFloat(model.y)));
 };
-var $author$project$Kadai1$view = function (model) {
+var $author$project$Mouse$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -10638,52 +10635,29 @@ var $author$project$Kadai1$view = function (model) {
 				A2($elm$html$Html$Attributes$style, 'width', '100vw'),
 				A2($elm$html$Html$Attributes$style, 'height', '100vh'),
 				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				model.down ? 'lightgray' : 'white'),
+				A2(
+				$elm$html$Html$Events$on,
+				'pointermove',
+				A2($elm$json$Json$Decode$map, $author$project$Mouse$Move, $author$project$Mouse$pointerDecoder)),
+				A2(
 				$elm$html$Html$Events$on,
 				'pointerdown',
-				A2($elm$json$Json$Decode$map, $author$project$Kadai1$Down, $author$project$Kadai1$pointerDecoder)),
+				A2($elm$json$Json$Decode$map, $author$project$Mouse$Down, $author$project$Mouse$pointerDecoder)),
 				A2(
 				$elm$html$Html$Events$on,
 				'pointerup',
-				A2($elm$json$Json$Decode$map, $author$project$Kadai1$Up, $author$project$Kadai1$pointerDecoder))
+				A2($elm$json$Json$Decode$map, $author$project$Mouse$Up, $author$project$Mouse$pointerDecoder))
 			]),
 		_List_fromArray(
 			[
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'left',
-						$elm$core$String$fromFloat(model.rectx) + 'px'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'top',
-						$elm$core$String$fromFloat(model.recty) + 'px'),
-						A2($elm$html$Html$Attributes$style, 'width', '100px'),
-						A2($elm$html$Html$Attributes$style, 'height', '100px'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'background-color',
-						model.down ? 'lightgray' : 'blue'),
-						A2(
-						$elm$html$Html$Events$on,
-						'pointermove',
-						A2($elm$json$Json$Decode$map, $author$project$Kadai1$Move, $author$project$Kadai1$pointerDecoder))
-					]),
-				_List_Nil),
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(
-						$author$project$Kadai1$statusText(model))
-					]))
+				$elm$html$Html$text(
+				$author$project$Mouse$statusText(model))
 			]));
 };
-var $author$project$Kadai1$main = $elm$browser$Browser$sandbox(
-	{init: $author$project$Kadai1$init, update: $author$project$Kadai1$update, view: $author$project$Kadai1$view});
-_Platform_export({'Kadai1':{'init':$author$project$Kadai1$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Kadai1.Msg","aliases":{"Kadai1.Pos":{"args":[],"type":"{ clientx : Basics.Float, clienty : Basics.Float }"}},"unions":{"Kadai1.Msg":{"args":[],"tags":{"Move":["Kadai1.Pos"],"Down":["Kadai1.Pos"],"Up":["Kadai1.Pos"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}}}}})}});}(this));
+var $author$project$Mouse$main = $elm$browser$Browser$sandbox(
+	{init: $author$project$Mouse$init, update: $author$project$Mouse$update, view: $author$project$Mouse$view});
+_Platform_export({'Mouse':{'init':$author$project$Mouse$main(
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Mouse.Msg","aliases":{"Mouse.Pos":{"args":[],"type":"{ clientx : Basics.Float, clienty : Basics.Float }"}},"unions":{"Mouse.Msg":{"args":[],"tags":{"Move":["Mouse.Pos"],"Down":["Mouse.Pos"],"Up":["Mouse.Pos"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}}}}})}});}(this));
